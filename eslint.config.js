@@ -1,24 +1,26 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
+import airbnbBase from 'eslint-config-airbnb-base';
+import eslintPluginImport from 'eslint-plugin-import';
 
-/** @type {import('eslint').Linter.Config[]} */
 export default [
-  { 
-    languageOptions: { 
-      globals: globals.browser 
-    }
-  },
-  
-  pluginJs.configs.recommended,
-  
   {
-    files: ['**/*.js'], 
+    files: ['*.js'],
     languageOptions: {
-      globals: {
-        ...globals.browser, 
-        jest: 'readonly',  
-        test: 'readonly',  
-        expect: 'readonly', 
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+    rules: {
+      'no-console': 'off',
+      'import/extensions': 'off',
+      'no-undef': 'off',
+    },
+    plugins: {
+      'import': eslintPluginImport,
+    },
+    settings: {
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        },
       },
     },
   },

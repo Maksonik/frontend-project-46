@@ -19,13 +19,13 @@ function formatValue(value, depth) {
   
   function formatStylish(diff, depth = 0) {
     const indentSize = 4;
-    const currentIndent = ' '.repeat(depth * indentSize); // Текущий отступ для уровня
-    const nextIndent = ' '.repeat((depth + 1) * indentSize); // Отступ для вложенных элементов
+    const currentIndent = ' '.repeat(depth * indentSize);
+    const nextIndent = ' '.repeat((depth + 1) * indentSize);
     let lines = [];
   
     for (const [key, value] of Object.entries(diff)) {
       const { status } = value;
-  
+      let children;
       switch (status) {
         case 'added':
           lines.push(`${currentIndent}  + ${key}: ${formatValue(value.value, depth + 1)}`);
@@ -38,7 +38,7 @@ function formatValue(value, depth) {
           lines.push(`${currentIndent}  + ${key}: ${formatValue(value.newValue, depth + 1)}`);
           break;
         case 'nested':
-          const children = formatStylish(value.children, depth + 1); // Рекурсивный вызов для вложенных объектов
+          children = formatStylish(value.children, depth + 1);
           lines.push(`${currentIndent}    ${key}: {\n${children}\n${nextIndent}}`);
           break;
         case 'unchanged':

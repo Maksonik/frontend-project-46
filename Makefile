@@ -11,4 +11,4 @@ test:
 	npx jest
 
 install:
-	npx install
+	npm install

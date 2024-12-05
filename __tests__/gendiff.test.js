@@ -26,7 +26,6 @@ test('gendiff plain format', () => {
 test('gendiff json format', () => {
   const file1 = getFixturePath('file1.json');
   const file2 = getFixturePath('file2.json');
-  console.log(gendiff(file1, file2, 'json'))
 
   const expected = readFile('expected_json.json');
   expect(gendiff(file1, file2, 'json')).toBe(expected);

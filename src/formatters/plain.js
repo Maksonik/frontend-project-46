@@ -2,7 +2,7 @@ import formatValue from '../formatValue.js';
 
 export default function plain(diff, parent = '') {
   const lines = Object.entries(diff).map(([key, value]) => {
-    const status = value.status;
+    const { status } = value;
     const fullKey = parent ? `${parent}.${key}` : key;
 
     switch (status) {

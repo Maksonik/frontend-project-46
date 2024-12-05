@@ -1,3 +1,5 @@
+import formatValue from '../formatValue.js';
+
 export default function plain(diff, parent = '') {
     const lines = Object.entries(diff).map(([key, value]) => {
       const { status, ...rest } = value;
@@ -18,14 +20,4 @@ export default function plain(diff, parent = '') {
     });
   
     return lines.filter(Boolean).join('\n');
-  }
-  
-  function formatValue(value) {
-    if (typeof value === 'object') {
-      return '[complex value]';
-    }
-    if (typeof value === 'string') {
-      return `'${value}'`;
-    }
-    return String(value);
   }

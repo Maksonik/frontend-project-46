@@ -6,6 +6,7 @@ export default function generateDiff(filePath1, filePath2, formatType = 'stylish
   const data1 = readFile(filePath1);
   const data2 = readFile(filePath2);
   const diff = buildDiff(data1, data2);
+  console.log(formatType)
 
   return formatters[formatType](diff);
 }

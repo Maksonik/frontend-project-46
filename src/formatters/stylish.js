@@ -1,27 +1,55 @@
-export default function stylish(diff, depth = 0) {
-    const indent = '    '.repeat(depth);
-    const lines = Object.entries(diff).map(([key, value]) => {
-      const { status, ...rest } = value;
-      const getValue = (val, d) => (typeof val === 'object' ? stylish(val, d + 1) : JSON.stringify(val));
+function formatValue(value, depth) {
+    if (value === null) {
+      return 'null';
+    }
+    if (typeof value === 'object') {
+      const indentSize = 4;
+      const currentIndent = ' '.repeat(depth * indentSize);
+      const nextIndent = ' '.repeat((depth + 1) * indentSize);
+      const lines = Object.entries(value).map(([key, val]) => {
+        return `${nextIndent}${key}: ${formatValue(val, depth + 1)}`;
+      });
+      return `{\n${lines.join('\n')}\n${currentIndent}}`;
+    }
+    if (typeof value === 'string') {
+      return value; 
+    }
+    return String(value);
+  }
+  
+  function formatStylish(diff, depth = 0) {
+    const indentSize = 4;
+    const currentIndent = ' '.repeat(depth * indentSize); // Текущий отступ для уровня
+    const nextIndent = ' '.repeat((depth + 1) * indentSize); // Отступ для вложенных элементов
+    let lines = [];
+  
+    for (const [key, value] of Object.entries(diff)) {
+      const { status } = value;
   
       switch (status) {
         case 'added':
-          return `${indent}  + ${key}: ${getValue(rest.value, depth + 1)}`;
+          lines.push(`${currentIndent}  + ${key}: ${formatValue(value.value, depth + 1)}`);
+          break;
         case 'removed':
-          return `${indent}  - ${key}: ${getValue(rest.value, depth + 1)}`;
+          lines.push(`${currentIndent}  - ${key}: ${formatValue(value.value, depth + 1)}`);
+          break;
         case 'changed':
-          return [
-            `${indent}  - ${key}: ${getValue(rest.oldValue, depth + 1)}`,
-            `${indent}  + ${key}: ${getValue(rest.newValue, depth + 1)}`,
-          ].join('\n');
+          lines.push(`${currentIndent}  - ${key}: ${formatValue(value.oldValue, depth + 1)}`);
+          lines.push(`${currentIndent}  + ${key}: ${formatValue(value.newValue, depth + 1)}`);
+          break;
         case 'nested':
-          return `${indent}    ${key}: {\n${stylish(rest.children, depth + 1)}\n${indent}    }`;
+          const children = formatStylish(value.children, depth + 1); // Рекурсивный вызов для вложенных объектов
+          lines.push(`${currentIndent}    ${key}: {\n${children}\n${nextIndent}}`);
+          break;
         case 'unchanged':
-          return `${indent}    ${key}: ${getValue(rest.value, depth + 1)}`;
-        default:
-          return '';
+          lines.push(`${currentIndent}    ${key}: ${formatValue(value.value, depth + 1)}`);
+          break;
       }
-    });
+    }
   
     return lines.join('\n');
+  }
+  
+  export default function stylish(diff) {
+    return `{\n${formatStylish(diff)}\n}`;
   }

@@ -12,7 +12,6 @@ const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8'
 test('gendiff stylish format', () => {
   const file1 = getFixturePath('file1.json');
   const file2 = getFixturePath('file2.json');
-  console.log(gendiff(file1, file2, 'stylish'))
   const expected = readFile('expected_stylish.txt');
   expect(gendiff(file1, file2, 'stylish')).toBe(expected);
 });
@@ -20,8 +19,6 @@ test('gendiff stylish format', () => {
 test('gendiff plain format', () => {
   const file1 = getFixturePath('file1.json');
   const file2 = getFixturePath('file2.json');
-  console.log(gendiff(file1, file2, 'stylish'))
-
   const expected = readFile('expected_plain.txt');
   expect(gendiff(file1, file2, 'plain')).toBe(expected);
 });
@@ -29,7 +26,7 @@ test('gendiff plain format', () => {
 test('gendiff json format', () => {
   const file1 = getFixturePath('file1.json');
   const file2 = getFixturePath('file2.json');
-  console.log(gendiff(file1, file2, 'stylish'))
+  console.log(gendiff(file1, file2, 'json'))
 
   const expected = readFile('expected_json.json');
   expect(gendiff(file1, file2, 'json')).toBe(expected);

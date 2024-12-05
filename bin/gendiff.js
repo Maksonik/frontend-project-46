@@ -1,9 +1,7 @@
-#!/usr/bin/env node
-
 import { program as commander } from 'commander';
 import generateDiff from '../src/index.js';
 
-export function createProgram() {
+export default function createProgram() {
   const program = commander
     .name('gendiff')
     .description('Compares two configuration files and shows a difference.')

@@ -3,6 +3,8 @@
 import { program } from 'commander';
 import generateDiff from '../src/index.js';
 
+export default generateDiff
+
 program
   .name('gendiff')
   .description('Compares two configuration files and shows a difference.')

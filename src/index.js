@@ -1,4 +1,4 @@
-import { readFile } from './fileParser.js';
+import readFile from './fileParser.js';
 import buildDiff from './buildDiff.js';
 import formatters from './formatters/index.js';
 

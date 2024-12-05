@@ -1,27 +1,55 @@
-import airbnbBase from 'eslint-config-airbnb-base';
-import eslintPluginImport from 'eslint-plugin-import';
+import globals from 'globals';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { FlatCompat } from '@eslint/eslintrc';
+import pluginJs from '@eslint/js';
+import importPlugin from 'eslint-plugin-import';
+
+// mimic CommonJS variables -- not needed if using CommonJS
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: pluginJs.configs.recommended,
+});
 
 export default [
   {
-    files: ['*.js'],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
-    rules: {
-      'no-console': 'off',
-      'import/extensions': 'off',
-      'no-undef': 'off',
-    },
-    plugins: {
-      'import': eslintPluginImport,
-    },
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
+      globals: {
+        ...globals.node,
+        ...globals.jest,
       },
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+    },
+    plugins: { import: importPlugin },
+    rules: {
+      ...importPlugin.configs.recommended.rules,
+    },
+    ignores: ['coverage/'], // Исправлено: используем 'ignores' вместо 'ignorePatterns'
+  },
+  ...compat.extends('airbnb-base'),
+  {
+    rules: {
+      'no-underscore-dangle': [
+        'error',
+        {
+          allow: ['__filename', '__dirname'],
+        },
+      ],
+      'import/extensions': [
+        'error',
+        {
+          js: 'always',
+        },
+      ],
+      'import/no-named-as-default': 'off',
+      'import/no-named-as-default-member': 'off',
+      'no-console': 'off',
+      'import/no-extraneous-dependencies': 'off',
     },
   },
 ];

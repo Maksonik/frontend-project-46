@@ -38,6 +38,8 @@ gendiff [параметры] <первый_файл> <второй_файл>
    gendiff file1.json file2.json
    ```
 
+   [![asciinema](https://asciinema.org/a/tS1v46zptWvcSCj67L8WjeycP)
+
 2. Сравнение файлов с выводом в формате `plain`:
    ```bash
    gendiff --format plain file1.json file2.json

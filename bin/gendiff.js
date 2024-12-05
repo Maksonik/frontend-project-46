@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import { program } from 'commander';
+import { program as commander } from 'commander';
 import generateDiff from '../src/index.js';
-
 
 export function createProgram() {
   const program = commander
@@ -18,6 +17,5 @@ export function createProgram() {
   return program;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  createProgram().parse();
-}
+
+createProgram().parse();

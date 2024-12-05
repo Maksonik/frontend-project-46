@@ -1,18 +1,14 @@
 export default function buildDiff(data1, data2) {
   const keys = [...new Set([...Object.keys(data1), ...Object.keys(data2)])];
 
-  const sortedKeys = keys.reduce((acc, key) => {
-    let inserted = false;
-    for (let i = 0; i < acc.length; i++) {
-      if (key < acc[i]) {
-        acc.splice(i, 0, key);
-        inserted = true;
-        break;
+  const sortedKeys = keys
+    .reduce((acc, key) => {
+      const index = acc.findIndex((sortedKey) => sortedKey > key);
+      if (index === -1) {
+        return [...acc, key];
       }
-    }
-    if (!inserted) acc.push(key);
-    return acc;
-  }, []);
+      return [...acc.slice(0, index), key, ...acc.slice(index)];
+    }, []);
 
   const diff = sortedKeys.reduce((acc, key) => {
     const value1 = data1[key];
@@ -29,5 +25,6 @@ export default function buildDiff(data1, data2) {
     }
     return { ...acc, [key]: { status: 'unchanged', value: value1 } };
   }, {});
+
   return diff;
 }

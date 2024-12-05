@@ -1,6 +1,19 @@
 export default function buildDiff(data1, data2) {
   const keys = [...new Set([...Object.keys(data1), ...Object.keys(data2)])];
-  const sortedKeys = Array.from(keys).sort(); // создаем новый массив и сортируем его
+
+  const sortedKeys = keys.reduce((acc, key) => {
+    let inserted = false;
+    for (let i = 0; i < acc.length; i++) {
+      if (key < acc[i]) {
+        acc.splice(i, 0, key);
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted) acc.push(key);
+    return acc;
+  }, []);
+
   const diff = sortedKeys.reduce((acc, key) => {
     const value1 = data1[key];
     const value2 = data2[key];

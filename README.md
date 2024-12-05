@@ -38,14 +38,18 @@ gendiff [параметры] <первый_файл> <второй_файл>
    gendiff file1.json file2.json
    ```
 
-[![asciinema](https://asciinema.org/a/tS1v46zptWvcSCj67L8WjeycP)](https://asciinema.org/a/tS1v46zptWvcSCj67L8WjeycP)
+   [![asciicast](https://asciinema.org/a/tS1v46zptWvcSCj67L8WjeycP.svg)](https://asciinema.org/a/tS1v46zptWvcSCj67L8WjeycP)
 
 2. Сравнение файлов с выводом в формате `plain`:
    ```bash
    gendiff --format plain file1.json file2.json
    ```
 
+   [![asciicast](https://asciinema.org/a/OGzh46mlIZt7LIaBQrebQemlR.svg)](https://asciinema.org/a/OGzh46mlIZt7LIaBQrebQemlR)
+
 3. Сравнение файлов с выводом в формате `json`:
    ```bash
    gendiff --format json file1.yaml file2.yaml
    ```
+
+   [![asciicast](https://asciinema.org/a/kNsvZdS4kkwy7TY5dOka8YHUX.svg)](https://asciinema.org/a/kNsvZdS4kkwy7TY5dOka8YHUX)
